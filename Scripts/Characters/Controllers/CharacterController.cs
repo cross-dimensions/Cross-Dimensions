@@ -4,6 +4,8 @@ namespace CrossDimensions.Characters.Controllers;
 
 public abstract partial class CharacterController : Node2D
 {
+    public bool IsMoving => !MovementInput.IsZeroApprox();
+
     public abstract Vector2 MovementInput { get; }
 
     public abstract Vector2 Target { get; }
