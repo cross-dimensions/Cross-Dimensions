@@ -23,7 +23,8 @@ public partial class StateMachine : Node
     public virtual void Initialize(Node context)
     {
         Context = context;
-        ChangeState(CurrentState = InitialState);
+        CurrentState = InitialState;
+        ChangeState(CurrentState);
     }
 
     public void ChangeState(State newState)
