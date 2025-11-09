@@ -2,6 +2,9 @@ using Godot;
 
 namespace CrossDimensions.States.Characters;
 
+/// <summary>
+/// State for when the character is in the air.
+/// </summary>
 public sealed partial class CharacterAirState : CharacterState
 {
     [Export]
