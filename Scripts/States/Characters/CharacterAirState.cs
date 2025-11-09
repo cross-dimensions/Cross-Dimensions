@@ -14,7 +14,14 @@ public sealed partial class CharacterAirState : CharacterState
     {
         if (CharacterContext.Controller.IsSplitting)
         {
-            return SplitState;
+            if (CharacterContext.Cloneable?.Mirror is null)
+            {
+                return SplitState;
+            }
+            else if (!CharacterContext.Cloneable.IsClone)
+            {
+                CharacterContext.Cloneable.Merge();
+            }
         }
 
         return null;

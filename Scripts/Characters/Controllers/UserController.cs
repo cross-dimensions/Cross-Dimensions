@@ -9,7 +9,7 @@ public sealed partial class UserController : CharacterController
         get
         {
             Vector2 vec = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-            vec.X *= XScale;
+            vec *= XScale;
             return vec;
         }
     }

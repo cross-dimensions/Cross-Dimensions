@@ -13,6 +13,8 @@ public sealed partial class CharacterSplitState : CharacterState
 
     private double _timeLeft;
 
+    private bool _doDash = false;
+
     public override State Enter(State previousState)
     {
         _inputDirection = CharacterContext.Controller
@@ -21,13 +23,8 @@ public sealed partial class CharacterSplitState : CharacterState
 
         _timeLeft = 0.1f;
         
-        if (PerformSplit())
-        {
-            var clone = CharacterContext.Cloneable.Clone;
-            clone.MovementStateMachine.InitialState = clone
-                .MovementStateMachine
-                .GetNode<State>("Split State");
-        }
+        // when performing a split
+        PerformSplit();
 
         return null;
     }
@@ -39,6 +36,7 @@ public sealed partial class CharacterSplitState : CharacterState
 
     public override State PhysicsProcess(double delta)
     {
+        CharacterContext.VelocityFromExternalForces = Vector2.Zero;
         CharacterContext.Velocity = _inputDirection * CharacterContext
             .Cloneable.SplitForce;
         CharacterContext.MoveAndSlide();
@@ -49,5 +47,24 @@ public sealed partial class CharacterSplitState : CharacterState
         }
 
         return null;
+    }
+
+    private bool PerformSplit()
+    {
+        if (CharacterContext.Controller.IsSplitting)
+        {
+            if (CharacterContext.Cloneable.Mirror is null)
+            {
+                var clone = CharacterContext.Cloneable.Split();
+                return clone is not null;
+            }
+            else if (!CharacterContext.Cloneable.IsClone)
+            {
+                CharacterContext.Cloneable.Merge();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

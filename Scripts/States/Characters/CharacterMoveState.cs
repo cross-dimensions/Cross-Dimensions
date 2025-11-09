@@ -37,7 +37,14 @@ public partial class CharacterMoveState : CharacterState
 
         if (CharacterContext.Controller.IsSplitting)
         {
-            return SplitState;
+            if (CharacterContext.Cloneable?.Mirror is null)
+            {
+                return SplitState;
+            }
+            else
+            {
+                CharacterContext.Cloneable.Merge();
+            }
         }
 
         return null;

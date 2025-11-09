@@ -16,6 +16,10 @@ public partial class Character : CharacterBody2D
     [Export]
     public float JumpForce { get; set; } = 384f;
 
+    /// <summary>
+    /// The cloneable component that allows this character to be cloned or
+    /// merged. If null, this character cannot be cloned.
+    /// </summary>
     [Export]
     public CloneableComponent Cloneable { get; set; } = null;
 

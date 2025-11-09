@@ -60,6 +60,10 @@ public partial class CharacterState : State
         CharacterContext.VelocityFromExternalForces = new Vector2(newX, oldVelocity.Y);
     }
 
+    /// <summary>
+    /// Common movement application logic that sets the character's velocity
+    /// based on movement input and external forces.
+    /// </summary>
     protected void ApplyMovement(double delta)
     {
         Vector2 wishDir = CharacterContext.Controller.MovementInput;
@@ -87,16 +91,14 @@ public partial class CharacterState : State
             + CharacterContext.VelocityFromExternalForces;
     }
 
-    protected bool PerformSplit()
-    {
-        if (CharacterContext.Controller.IsSplitting)
-        {
-            return CharacterContext.Cloneable.Split();
-        }
-
-        return false;
-    }
-
+    /// <summary>
+    /// Recalculates the external velocity by getting the change in total velocity,
+    /// which is often modified by collision responses, and distributing that change
+    /// proportionally between input and external forces. Note that this only adjusts
+    /// the X component of the external velocity; the Y component is taken directly
+    /// from the total velocity. This is because the input velocity only affects horizontal
+    /// movement.
+    /// </summary>
     protected void RecalculateExternalVelocity()
     {
         Vector2 inputVelocity = CharacterContext.VelocityFromInput;

@@ -27,6 +27,14 @@ public partial class CharacterIdleState : CharacterState
             return MoveState;
         }
 
+        if (CharacterContext.Controller.IsSplitting)
+        {
+            if (!(CharacterContext.Cloneable?.IsClone ?? false))
+            {
+                CharacterContext.Cloneable.Merge();
+            }
+        }
+
         return null;
     }
 
