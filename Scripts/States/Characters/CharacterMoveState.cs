@@ -2,6 +2,9 @@ using Godot;
 
 namespace CrossDimensions.States.Characters;
 
+/// <summary>
+/// State for when the character is moving on the ground.
+/// </summary>
 public partial class CharacterMoveState : CharacterState
 {
     [Export]

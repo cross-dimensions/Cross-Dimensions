@@ -2,6 +2,9 @@ using Godot;
 
 namespace CrossDimensions.States.Characters;
 
+/// <summary>
+/// State for when the character is idle on the ground.
+/// </summary>
 public partial class CharacterIdleState : CharacterState
 {
     [Export]

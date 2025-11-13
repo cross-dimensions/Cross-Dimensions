@@ -2,6 +2,9 @@ using Godot;
 
 namespace CrossDimensions.States.Characters;
 
+/// <summary>
+/// State for when the character is performing a split.
+/// </summary>
 public sealed partial class CharacterSplitState : CharacterState
 {
     [Export]
