@@ -23,6 +23,10 @@ project/assembly_name="CrossDimensions"
 
 enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
+[global_group]
+
+Player=""
+
 [input]
 
 move_left={

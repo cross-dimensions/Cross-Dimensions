@@ -8,7 +8,7 @@
 script = ExtResource("1_2cqxi")
 
 [node name="TurretAxis" type="Node2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, 11)
 
 [node name="Turret" type="Sprite2D" parent="TurretAxis"]
 position = Vector2(0, 32)
