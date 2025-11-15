@@ -4,32 +4,32 @@ namespace CrossDimensions.Characters;
 
 public partial class Character : CharacterBody2D
 {
-    /// <summary>
-    /// The controller component that grabs input for this character.
-    /// </summary>
-    [Export]
-    public Controllers.CharacterController Controller { get; set; }
+	/// <summary>
+	/// The controller component that grabs input for this character.
+	/// </summary>
+	[Export]
+	public Controllers.CharacterController Controller { get; set; }
 
-    /// <summary>
-    /// The state machine that controls the movement states of the character.
-    /// </summary>
-    [Export]
-    public States.StateMachine MovementStateMachine { get; set; }
+	/// <summary>
+	/// The state machine that controls the movement states of the character.
+	/// </summary>
+	[Export]
+	public States.StateMachine MovementStateMachine { get; set; }
 
-    /// <summary>
-    /// The movement speed of the character in units per second.
-    /// </summary>
-    [Export]
-    public float Speed { get; set; } = 192f;
+	/// <summary>
+	/// The movement speed of the character in units per second.
+	/// </summary>
+	[Export]
+	public float Speed { get; set; } = 192f;
 
-    /// <summary>
-    /// The initial velocity applied when the character jumps. Note that
-    /// this velocity is applied to <c>VelocityFromExternalForces</c>
-    /// instead of <c>VelocityFromInput</c> to reset any existing vertical
-    /// velocity.
-    /// </summary>
-    [Export]
-    public float JumpForce { get; set; } = 384f;
+	/// <summary>
+	/// The initial velocity applied when the character jumps. Note that
+	/// this velocity is applied to <c>VelocityFromExternalForces</c>
+	/// instead of <c>VelocityFromInput</c> to reset any existing vertical
+	/// velocity.
+	/// </summary>
+	[Export]
+	public float JumpForce { get; set; } = 384f;
 
 	/// <summary>
 	/// The cloneable component that allows this character to be cloned or
@@ -38,18 +38,18 @@ public partial class Character : CharacterBody2D
 	[Export]
 	public CloneableComponent Cloneable { get; set; } = null;
 
-    /// <summary>
-    /// The velocity of the character from input controls. This is used by the
-    /// movement states to compute <c>Velocity</c>.
-    /// </summary>
-    public Vector2 VelocityFromInput { get; set; } = Vector2.Zero;
+	/// <summary>
+	/// The velocity of the character from input controls. This is used by the
+	/// movement states to compute <c>Velocity</c>.
+	/// </summary>
+	public Vector2 VelocityFromInput { get; set; } = Vector2.Zero;
 
-    /// <summary>
-    /// The velocity of the character from external forces (e.g. knockback,
-    /// gravity). This is used by the movement states to compute
-    /// <c>Velocity</c>.
-    /// </summary>
-    public Vector2 VelocityFromExternalForces { get; set; } = Vector2.Zero;
+	/// <summary>
+	/// The velocity of the character from external forces (e.g. knockback,
+	/// gravity). This is used by the movement states to compute
+	/// <c>Velocity</c>.
+	/// </summary>
+	public Vector2 VelocityFromExternalForces { get; set; } = Vector2.Zero;
 
 	public override void _Ready()
 	{
