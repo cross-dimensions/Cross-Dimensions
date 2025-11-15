@@ -14,5 +14,13 @@ position = Vector2(0, 11)
 position = Vector2(0, 32)
 texture = ExtResource("1_go8sa")
 
+[node name="BulletSpawn" type="Node2D" parent="TurretAxis/Turret"]
+position = Vector2(0, 25)
+
 [node name="Base" type="Sprite2D" parent="."]
 texture = ExtResource("2_2cqxi")
+
+[node name="Bullet timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Bullet timer" to="." method="_on_bullet_timer_timeout"]
