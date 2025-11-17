@@ -21,6 +21,7 @@ position = Vector2(0, 25)
 texture = ExtResource("2_2cqxi")
 
 [node name="Bullet timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="Bullet timer" to="." method="_on_bullet_timer_timeout"]
