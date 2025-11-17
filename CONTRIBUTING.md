@@ -5,13 +5,13 @@
 - Recommended line width: < 80 characters
 - Hard maximum line width: < 100 characters
 
-### C#
+## C#
 
 Coding conventions should follow
 [Godot C# style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/c_sharp_style_guide.html)
 with the following specifics:
 
-## General Formatting
+### General Formatting
 
 - **Spaces** instead of tabs for indentation (4 spaces per indent level)
 - Allman braces on new lines
@@ -32,7 +32,7 @@ if (condition) {
 }
 ```
 
-## Spaces
+### Spaces
 
 - Space after keywords (e.g., `if`, `for`, `while`, `switch`, etc.)
 - Space after commas in lists, and after semicolons in `for` loops
@@ -44,7 +44,7 @@ if (condition) {
 - No space after unary operators (e.g., `!flag`, `-value`)
 - No space after type cast parentheses (e.g., `(int)x`)
 
-## Naming Conventions
+### Naming Conventions
 
 - Classes: `PascalCase`
 - Interfaces: `IPascalCase` (e.g. `IDamageable`)
@@ -57,13 +57,13 @@ if (condition) {
 - Local Variables (inside methods): `camelCase`
 - Constants: `PascalCase`
 
-## Additional Notes
+### Additional Notes
 
 Please use an external editor or IDE with official C# support instead of
 Godot's built-in script editor as it lacks many essential features for C#
 development.
 
-### GDScript
+## GDScript
 
 Coding conventions should follow Godot's
 [GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)
