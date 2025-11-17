@@ -5,8 +5,6 @@
 - Recommended line width: < 80 characters
 - Hard maximum line width: < 100 characters
 
-## Naming Conventions
-
 ### C#
 
 Coding conventions should follow
