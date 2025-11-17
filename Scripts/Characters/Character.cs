@@ -52,12 +52,12 @@ public partial class Character : CharacterBody2D
     /// </summary>
     public bool AllowJumpInput = true;
 
-	/// <summary>
-	/// The cloneable component that allows this character to be cloned or
-	/// merged. If null, this character cannot be cloned.
-	/// </summary>
-	[Export]
-	public CloneableComponent Cloneable { get; set; } = null;
+    /// <summary>
+    /// The cloneable component that allows this character to be cloned or
+    /// merged. If null, this character cannot be cloned.
+    /// </summary>
+    [Export]
+    public CloneableComponent Cloneable { get; set; } = null;
 
     /// <summary>
     /// The velocity of the character from input controls. This is used by the
@@ -72,15 +72,15 @@ public partial class Character : CharacterBody2D
     /// </summary>
     public Vector2 VelocityFromExternalForces { get; set; } = Vector2.Zero;
 
-	public override void _Ready()
-	{
-		MovementStateMachine.Initialize(this);
-	}
+    public override void _Ready()
+    {
+        MovementStateMachine.Initialize(this);
+    }
 
-	public override void _Process(double delta)
-	{
-		MovementStateMachine.Process(delta);
-	}
+    public override void _Process(double delta)
+    {
+        MovementStateMachine.Process(delta);
+    }
 
     public override void _PhysicsProcess(double delta)
     {
