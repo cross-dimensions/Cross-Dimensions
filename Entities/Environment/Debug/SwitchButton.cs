@@ -5,9 +5,7 @@ namespace CrossDimensions.Environment.Puzzles;
 
 public partial class SwitchButton : Node
 {
-    public bool SwitchPressed = false;
-
-    
+    public bool SwitchPressed { get; set; } = false;
 
 
 }
