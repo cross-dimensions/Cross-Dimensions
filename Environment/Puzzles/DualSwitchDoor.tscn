@@ -1,13 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctxe26umdplst"]
+[gd_scene load_steps=5 format=3 uid="uid://ctxe26umdplst"]
 
 [ext_resource type="Script" uid="uid://cxddod3sk0sgh" path="res://Environment/Puzzles/SwitchDoor.cs" id="1_j7cla"]
 [ext_resource type="Script" uid="uid://br271af6jj18e" path="res://Environment/Puzzles/SwitchButton.cs" id="2_3wldm"]
 
-[node name="DualSwitchDoor" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4pjn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqyf8"]
+
+[node name="DualSwitchDoor" type="Node2D" node_paths=PackedStringArray("Switches")]
 script = ExtResource("1_j7cla")
+Switches = [NodePath("SwitchA"), NodePath("SwitchB")]
 
 [node name="SwitchA" type="Node2D" parent="."]
 script = ExtResource("2_3wldm")
 
+[node name="Area2D" type="Area2D" parent="SwitchA"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchA/Area2D"]
+shape = SubResource("RectangleShape2D_k4pjn")
+
 [node name="SwitchB" type="Node2D" parent="."]
 script = ExtResource("2_3wldm")
+
+[node name="Area2D" type="Area2D" parent="SwitchB"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwitchB/Area2D"]
+shape = SubResource("RectangleShape2D_mqyf8")
+
+[connection signal="body_entered" from="SwitchA/Area2D" to="SwitchA" method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="SwitchA/Area2D" to="SwitchA" method="OnArea2DBodyExited"]
+[connection signal="body_entered" from="SwitchB/Area2D" to="SwitchB" method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="SwitchB/Area2D" to="SwitchB" method="OnArea2DBodyExited"]
