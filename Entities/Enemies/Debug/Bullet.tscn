@@ -34,5 +34,3 @@ DamageComponent = NodePath("../DamageComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(1, 10)
 shape = SubResource("RectangleShape2D_1aeha")
-
-[connection signal="timeout" from="Lifespan" to="." method="_on_lifespan_timeout"]
