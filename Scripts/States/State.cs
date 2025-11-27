@@ -19,15 +19,17 @@ public partial class State : Node
     internal State EnterChildren(State previousState)
     {
         State next = null;
-        foreach (var child in GetChildren())
+        foreach (var child in this.EnumerateChildren())
         {
             if (child is State state)
             {
+                state.Context = Context;
                 next = state.Enter(previousState);
             }
             else
             {
-                next = child.CallScriptMethod<State>("process", previousState);
+                child.Set("context", Context);
+                next = child.CallScriptMethod<State>("enter", previousState);
             }
 
             if (next is not null)
@@ -68,7 +70,7 @@ public partial class State : Node
     /// </summary>
     public virtual State Process(double delta)
     {
-        return Process(delta);
+        return ProcessChildren(delta);
     }
 
     internal State ProcessChildren(double delta)
