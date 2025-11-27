@@ -1,11 +1,12 @@
 using Godot;
+using Godot.Collections;
 
 namespace CrossDimensions.Items;
 
 public partial class Weapon : ItemInstance
 {
     [Export]
-    public States.Weapons.WeaponStateMachine StateMachine { get; set; }
+    public States.StateMachine StateMachine { get; set; }
 
     public bool IsPrimaryUseHeld
     {
@@ -17,8 +18,18 @@ public partial class Weapon : ItemInstance
         get => OwnerCharacter?.Controller?.IsMouse2Held ?? false;
     }
 
+    public Vector2 Target
+    {
+        get => OwnerCharacter?.Controller?.Target ?? Vector2.Zero;
+    }
+
     public override void _Ready()
     {
         StateMachine.Initialize(this);
+    }
+
+    public override void _Process(double delta)
+    {
+        StateMachine.Process(delta);
     }
 }
