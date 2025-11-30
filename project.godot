@@ -27,6 +27,7 @@ enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 
 Player=""
 Bullet=""
+Enemy=""
 
 [input]
 
