@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8dvbcxffaod0"]
+[gd_scene load_steps=5 format=3 uid="uid://b8dvbcxffaod0"]
 
 [ext_resource type="Script" uid="uid://dta27e42o7lb5" path="res://Scripts/UI/UI Main Menu/start_buitton.gd" id="1_tt5f1"]
+[ext_resource type="Script" uid="uid://8csvlv7ryj70" path="res://Scripts/UI/UI Main Menu/exit_button.gd" id="2_853f1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bnhvo"]
 bg_color = Color(0.2592937, 0.2592937, 0.2592937, 1)
@@ -24,7 +25,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Control" type="Control"]
+[node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BackgroundColor" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,7 +44,7 @@ grow_vertical = 2
 color = Color(0.2592937, 0.2592937, 0.2592937, 1)
 metadata/_edit_lock_ = true
 
-[node name="Menu Select" type="VBoxContainer" parent="."]
+[node name="MenuSelect" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -55,25 +56,25 @@ offset_bottom = 232.0
 grow_vertical = 2
 theme_override_constants/separation = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu Select"]
+[node name="GameTitle" type="VBoxContainer" parent="MenuSelect"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="Menu Select/VBoxContainer"]
+[node name="TitleUpper" type="Label" parent="MenuSelect/GameTitle"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 48
 text = "Crossed"
 uppercase = true
 
-[node name="Label2" type="Label" parent="Menu Select/VBoxContainer"]
+[node name="TitleLower" type="Label" parent="MenuSelect/GameTitle"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 48
 text = "Dimensions"
 uppercase = true
 
-[node name="Start Buitton" type="Button" parent="Menu Select"]
+[node name="StartBuitton" type="Button" parent="MenuSelect"]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -83,7 +84,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_tt5f1")
 text = "Start"
 script = ExtResource("1_tt5f1")
 
-[node name="Settings Button" type="Button" parent="Menu Select"]
+[node name="SettingsButton" type="Button" parent="MenuSelect"]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -92,7 +93,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_bnhvo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_tt5f1")
 text = "Settings"
 
-[node name="Exit Button" type="Button" parent="Menu Select"]
+[node name="ExitButton" type="Button" parent="MenuSelect"]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -100,3 +101,4 @@ theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_bnhvo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_tt5f1")
 text = "Exit"
+script = ExtResource("2_853f1")
