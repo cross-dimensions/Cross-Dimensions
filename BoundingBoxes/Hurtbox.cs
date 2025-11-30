@@ -11,10 +11,10 @@ public partial class Hurtbox : BoundingBox
     public Components.HealthComponent HealthComponent { get; set; }
 
     /// <summary>
-    /// The weapon that owns this hurtbox, if any.
+    /// The character that owns this hurtbox, if any.
     /// </summary>
     [Export]
-    public Items.Weapon OwnerWeapon { get; set; }
+    public Characters.Character OwnerCharacter { get; set; }
 
     /// <summary>
     /// Signal emitted when this hurtbox is hit by a hitbox.
@@ -30,7 +30,40 @@ public partial class Hurtbox : BoundingBox
         if (HealthComponent != null && hitbox.DamageComponent != null)
         {
             int damage = hitbox.DamageComponent.DamageAmount;
-            HealthComponent.CurrentHealth -= damage;
+            float knockback = hitbox.DamageComponent.KnockbackMultiplier;
+            Vector2 hurtboxCenter = GlobalPosition;
+            Vector2 hitboxCenter = hitbox.GlobalPosition;
+            Vector2 direction = hurtboxCenter - hitboxCenter;
+
+            if (hitbox.FalloffWithDistance)
+            {
+                float distance = direction.Length();
+                float maxDistance = hitbox.GetNode<CollisionShape2D>("CollisionShape2D")
+                    .Shape
+                    .GetRect()
+                    .Size
+                    .Length() / 2;
+
+                float falloffFactor = Mathf.Clamp(1 - (distance / maxDistance), 0, 1);
+                damage = (int)(damage * falloffFactor);
+            }
+
+            // characters can not hit themselves, but knockback will still
+            // apply
+            Vector2 force = direction.Normalized() * damage * knockback;
+            OwnerCharacter.VelocityFromExternalForces += force;
+
+            if (hitbox.OwnerCharacter == OwnerCharacter && OwnerCharacter is not null)
+            {
+                damage = 0;
+            }
+
+            EmitSignal(SignalName.HurtboxHit, hitbox);
+
+            if (damage > 0)
+            {
+                HealthComponent.CurrentHealth -= damage;
+            }
         }
     }
 }

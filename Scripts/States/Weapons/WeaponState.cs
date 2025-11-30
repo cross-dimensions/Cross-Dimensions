@@ -19,22 +19,4 @@ public abstract partial class WeaponState : State
     /// The weapon this state belongs to.
     /// </summary>
     public Items.Weapon Weapon { get; private set; }
-
-    /// <summary>
-    /// Called when the owner character requests to use the weapon (primary use,
-    /// such as firing or swinging).
-    /// </summary>
-    public virtual State PrimaryUseStart()
-    {
-        return null;
-    }
-
-    /// <summary>
-    /// Called when the owner character stops using the weapon (releasing
-    /// the primary use input).
-    /// </summary>
-    public virtual State PrimaryUseEnd()
-    {
-        return null;
-    }
 }

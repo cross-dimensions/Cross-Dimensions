@@ -5,6 +5,13 @@ namespace CrossDimensions.Entities;
 public partial class Projectile : Node2D
 {
     /// <summary>
+    /// Signal emitted when the projectile hits something. Use this to handle
+    /// custom hit logic.
+    /// </summary>
+    [Signal]
+    public delegate void ProjectileHitEventHandler(Projectile projectile);
+
+    /// <summary>
     /// The direction the projectile is moving in. If set in the editor,
     /// it should be a normalized vector.
     /// </summary>
@@ -24,11 +31,12 @@ public partial class Projectile : Node2D
     public BoundingBoxes.Hitbox Hitbox { get; set; }
 
     /// <summary>
-    /// A custom handler for handling the projectile. If not set, the
-    /// projectile will be freed on hit.
+    /// Determines if the projectile should be freed on hit. Set to false if
+    /// you want to handle projectile hit logic in a custom way using the
+    /// ProjectileHit event.
     /// </summary>
     [Export]
-    public Node ProjectileHitHandler { get; set; }
+    public bool FreeOnHit { get; set; } = true;
 
     /// <summary>
     /// A timer that determines the lifetime of the projectile. If null,
@@ -38,10 +46,23 @@ public partial class Projectile : Node2D
     [Export]
     public Timer LifetimeTimer { get; set; }
 
+    private Characters.Character _ownerCharacter;
+
     /// <summary>
     /// The character that owns this projectile, if any.
     /// </summary>
-    public Characters.Character OwnerCharacter { get; set; }
+    public Characters.Character OwnerCharacter
+    {
+        get => _ownerCharacter;
+        set
+        {
+            _ownerCharacter = value;
+            if (Hitbox is not null)
+            {
+                Hitbox.OwnerCharacter = value;
+            }
+        }
+    }
 
     /// <summary>
     /// The weapon that owns this projectile, if any.
@@ -54,26 +75,20 @@ public partial class Projectile : Node2D
         {
             LifetimeTimer.Timeout += () => QueueFree();
         }
+
+        Hitbox.Hit += OnHitboxHit;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         Position += Direction.Rotated(Rotation) * Speed * (float)delta;
-
-        Hitbox.AreaEntered += OnHitboxAreaEntered;
     }
 
-    public void OnHitboxAreaEntered(Area2D area)
+    public void OnHitboxHit()
     {
-        if (ProjectileHitHandler is IProjectileHitHandlerComponent handler)
-        {
-            handler.OnProjectileHit(this);
-        }
-        else if (ProjectileHitHandler.HasMethod("on_projectile_hit"))
-        {
-            ProjectileHitHandler.Call("on_projectile_hit", this);
-        }
-        else
+        EmitSignal(SignalName.ProjectileHit, this);
+
+        if (FreeOnHit)
         {
             QueueFree();
         }
