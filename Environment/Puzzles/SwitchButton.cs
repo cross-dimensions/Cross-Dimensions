@@ -16,12 +16,6 @@ public partial class SwitchButton : Area2D
     {
         this.BodyEntered += OnArea2DBodyEntered;
         this.BodyExited += OnArea2DBodyExited;
-        Node node = GetParent();
-        while (node != null && node is not SwitchDoor)
-        {
-            node = node.GetParent();
-        }
-        Door = node as SwitchDoor;
         if (Door == null)
         {
             GD.PrintErr("SwitchButton could not find parent SwitchDoor!");

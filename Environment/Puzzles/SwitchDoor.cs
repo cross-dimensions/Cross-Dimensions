@@ -1,10 +1,11 @@
+using System.Linq;
 using Godot;
 namespace CrossDimensions.Environment.Puzzles;
 public partial class SwitchDoor : Node
 {
     [Export]
     public Godot.Collections.Array<Node2D> Switches { get; set; } = [];
-    private Godot.Collections.Array<SwitchButton> Buttons { get; set; } = [];
+    private Godot.Collections.Array<SwitchButton> Buttons = [];
     [Export]
     public CollisionShape2D DoorCollider { get; set; }
     [Export]
@@ -13,6 +14,8 @@ public partial class SwitchDoor : Node
     private Texture2D ClosedTexture;
     [Export]
     private Texture2D OpenTexture;
+    [Export]
+    public bool StayOpen { get; set; } = false;
     public bool Open { get; set; } = false;
     public override void _Ready()
     {
@@ -22,26 +25,15 @@ public partial class SwitchDoor : Node
         }
     }
     public void Activate()
-    {  
-        var pressed = 0;
-        foreach ( SwitchButton button in Buttons )
-        {
-            if (button.SwitchPressed)
-            {
-                pressed++;
-            }
-        }
-        GD.Print($"Pressed switches: {pressed}");
-        bool allPressed = pressed == Buttons.Count;
+    {
+        bool allPressed = Buttons.All( (button) => button.SwitchPressed );
         if ( allPressed && !Open )
         {
             OpenDoor();
         } 
-        else if ( !allPressed && Open )
+        else if ( !allPressed && Open && !StayOpen )
         {
-            //use this if the door is to close when either switch *isn't* pressed
-            //if it's supposed to stay open after both switches pressed, don't
-            //CloseDoor();
+            CloseDoor();
         }
     }
     private void OpenDoor()
@@ -50,7 +42,6 @@ public partial class SwitchDoor : Node
         Open = true;
         DoorCollider.CallDeferred("set_disabled", true);
         Sprite.Texture = OpenTexture;
-
     }
     private void CloseDoor()
     {
