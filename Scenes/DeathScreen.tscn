@@ -32,6 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -40,9 +41,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.42745098, 0.42745098, 0.42745098, 1)
+color = Color(0.23392546, 0.23392546, 0.23392543, 1)
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="DeathMenuSelect" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35000002
@@ -56,13 +58,13 @@ offset_bottom = -77.20001
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DeathMessage" type="Label" parent="VBoxContainer"]
+[node name="DeathMessage" type="Label" parent="DeathMenuSelect"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "YOU ARE DEAD"
 metadata/_edit_lock_ = true
 
-[node name="RetryLevelButton" type="Button" parent="VBoxContainer"]
+[node name="RetryLevelButton" type="Button" parent="DeathMenuSelect"]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -72,7 +74,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_4pnsc")
 text = "RETRY"
 script = ExtResource("1_gb262")
 
-[node name="QuitToHomeButton" type="Button" parent="VBoxContainer"]
+[node name="QuitToHomeButton" type="Button" parent="DeathMenuSelect"]
 custom_minimum_size = Vector2(200, 60)
 layout_mode = 2
 size_flags_horizontal = 4
