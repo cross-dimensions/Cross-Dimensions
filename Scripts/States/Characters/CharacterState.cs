@@ -1,12 +1,13 @@
 using Godot;
 using CrossDimensions.Characters;
-using System.ComponentModel.DataAnnotations;
 
 namespace CrossDimensions.States.Characters;
 
 public partial class CharacterState : State
 {
     public Character CharacterContext { get; private set; }
+
+    private float gravity_k = 1.5f;
 
     public override Node Context
     {
@@ -31,37 +32,70 @@ public partial class CharacterState : State
             .GetSetting("physics/2d/default_gravity")
             .AsSingle();
 
+        //apply gravity boost if the player recently released a jump 
+        if (CharacterContext.JumpGravBoostTime > 0) {
+            float t_left = CharacterContext.JumpGravBoostTime 
+                - (Time.GetTicksMsec() - CharacterContext.JumpReleasedAtTime);
+            if (t_left < 0 || CharacterContext.IsOnFloor())
+            {
+                CharacterContext.JumpGravBoostTime = 0;
+                CharacterContext.JumpInitialVelocity = 0;
+                CharacterContext.JumpHeldAtTime = 0;
+                GD.Print($"Gravity boost expired");
+            } else
+            {
+                gravity *= gravity_k;   
+            }
+
+        }
+
         // apply gravity to the character
         CharacterContext.VelocityFromExternalForces += gravity * (float)delta;
     }
 
     protected bool PerformJump()
-    {
-        float jumpHolder = Time.GetTicksMsec() - CharacterContext.JumpHeldTime ;
-        if ( ( CharacterContext.Controller.IsJumpReleased || 
-                ( jumpHolder > (CharacterContext.JumpHoldTime * 1000) ) ) &&
-                ( !CharacterContext.IsOnFloor() ) )
+    {   
+        Vector2 gravity_base = ProjectSettings
+            .GetSetting("physics/2d/default_gravity_vector")
+            .AsVector2();
+        gravity_base *= ProjectSettings
+            .GetSetting("physics/2d/default_gravity")
+            .AsSingle();
+        float t_left = (CharacterContext.JumpTime * 1000) 
+            - (Time.GetTicksMsec() - CharacterContext.JumpHeldAtTime);
+    
+        // if jump released or timer exceeded, prevent jump until on ground
+        if ( ( CharacterContext.Controller.IsJumpReleased || t_left < 0.0 )
+                && !CharacterContext.IsOnFloor()
+                && CharacterContext.AllowJumpInput )
         {
-            // if jump released or timer exceeded, prevent jump until on ground
             CharacterContext.AllowJumpInput = false;
-            GD.Print($"Jump time exceeded or key released, preventing jump input");
+            CharacterContext.JumpReleasedAtTime = Time.GetTicksMsec();
+            CharacterContext.JumpGravBoostTime = t_left / gravity_k;
+            if (CharacterContext.JumpGravBoostTime > 0)
+            {
+                GD.Print($"Gravity boost time: {CharacterContext.JumpGravBoostTime}");
+            } else
+            {
+                CharacterContext.JumpGravBoostTime = 0;
+            }
         }
 
         if (CharacterContext.AllowJumpInput) 
-        {
+        { 
             if (CharacterContext.Controller.IsJumping )
             {
                 //on the first frame that the jump is held for, set the timer
-                CharacterContext.JumpHeldTime = Time.GetTicksMsec();
-                GD.Print($"Jump time set to {CharacterContext.JumpHeldTime}");
-            }
+                CharacterContext.JumpHeldAtTime = Time.GetTicksMsec();
 
-            if (CharacterContext.Controller.IsJumpHeld) {
-                // perform jump
+                //set initial velocity
+                CharacterContext.JumpInitialVelocity =
+                    (CharacterContext.JumpHeight / CharacterContext.JumpTime)
+                    + ( 0.5f * gravity_base.Length() * CharacterContext.JumpTime);
+
                 Vector2 velocity = CharacterContext.VelocityFromExternalForces;
-                velocity.Y = -CharacterContext.JumpForce;
+                velocity.Y = -CharacterContext.JumpInitialVelocity;
                 CharacterContext.VelocityFromExternalForces = velocity;
-                GD.Print($"Jump time: {jumpHolder} ");
                 return true;
             }
         }
