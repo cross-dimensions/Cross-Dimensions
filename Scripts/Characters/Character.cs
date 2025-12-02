@@ -22,24 +22,11 @@ public partial class Character : CharacterBody2D
     [Export]
     public float Speed { get; set; } = 192f;
 
-
-    /// <summary>
-    /// The amount of time in seconds a jump can be held for
-    /// </summary>
-    [Export]
-    public float JumpTime { get; set; } = 1.0f;
-
     /// <summary>
     /// The number of units the player can jump at max held duration
     /// </summary>
     [Export]
-    public float JumpHeight { get; set; } = 2.0f;
-
-    /// <summary>
-    /// The initial velocity of a jump
-    /// Calculated with JumpTime and JumpHeight
-    /// </summary>
-    public float JumpInitialVelocity = 0.0f;
+    public float JumpHeight { get; set; } = 72.0f;
 
     /// <summary>
     /// The time at which jumping began

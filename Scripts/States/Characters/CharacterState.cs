@@ -7,7 +7,7 @@ public partial class CharacterState : State
 {
     public Character CharacterContext { get; private set; }
 
-    private float gravity_k = 1.5f;
+    private float gravity_k = 4.0f;
 
     public override Node Context
     {
@@ -39,7 +39,6 @@ public partial class CharacterState : State
             if (t_left < 0 || CharacterContext.IsOnFloor())
             {
                 CharacterContext.JumpGravBoostTime = 0;
-                CharacterContext.JumpInitialVelocity = 0;
                 CharacterContext.JumpHeldAtTime = 0;
                 GD.Print($"Gravity boost expired");
             } else
@@ -61,7 +60,9 @@ public partial class CharacterState : State
         gravity_base *= ProjectSettings
             .GetSetting("physics/2d/default_gravity")
             .AsSingle();
-        float t_left = (CharacterContext.JumpTime * 1000) 
+        float jumpTime = Mathf.Sqrt(2 * CharacterContext.JumpHeight
+            / gravity_base.Length());
+        float t_left = (jumpTime * 1000) 
             - (Time.GetTicksMsec() - CharacterContext.JumpHeldAtTime);
     
         // if jump released or timer exceeded, prevent jump until on ground
@@ -89,12 +90,11 @@ public partial class CharacterState : State
                 CharacterContext.JumpHeldAtTime = Time.GetTicksMsec();
 
                 //set initial velocity
-                CharacterContext.JumpInitialVelocity =
-                    (CharacterContext.JumpHeight / CharacterContext.JumpTime)
-                    + ( 0.5f * gravity_base.Length() * CharacterContext.JumpTime);
+                float initialVelocity = Mathf.Sqrt(2 * gravity_base.Length()
+                    * CharacterContext.JumpHeight);
 
                 Vector2 velocity = CharacterContext.VelocityFromExternalForces;
-                velocity.Y = -CharacterContext.JumpInitialVelocity;
+                velocity.Y = -initialVelocity;
                 CharacterContext.VelocityFromExternalForces = velocity;
                 return true;
             }
