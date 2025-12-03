@@ -8,10 +8,18 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fxq0"]
 size = Vector2(60, 48)
 
-[node name="DebugTurret" type="Node2D" node_paths=PackedStringArray("attackPattern") groups=["Enemy"]]
+[node name="DebugTurret" type="CharacterBody2D" node_paths=PackedStringArray("attackPattern") groups=["Enemy"]]
+collision_layer = 8
+motion_mode = 1
 script = ExtResource("1_2cqxi")
 enemyName = "Turret"
+movementSpeed = 0.0
+eClass = 1
 attackPattern = NodePath("AttackPattern")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_5fxq0")
 
 [node name="TurretAxis" type="Node2D" parent="."]
 position = Vector2(0, 11)
@@ -35,6 +43,7 @@ script = ExtResource("4_5fxq0")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 512
+collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -8)

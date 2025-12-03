@@ -1,11 +1,37 @@
 class_name WalkingEnemy extends EnemyBase
 
+var direction : int = -1  # 1 for right, -1 for left
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@onready var floor_check : RayCast2D = $FloorCheck
+@onready var wall_check : RayCast2D = $WallCheck
 
+@onready var sprite : AnimatedSprite2D = $WalkingSprite
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+func _process(delta: float) -> void:
+	move_behavior(delta)
+
+	if sprite.animation != "Walk":
+		sprite.play("Walk")
+
+func move_behavior(_delta : float) -> void:
+	velocity.x = direction * movementSpeed
+
+	if wall_check.is_colliding():
+		_flip()
+	
+	if not floor_check.is_colliding():
+		_flip()
+	
+	move_and_slide()
+
+func _flip() -> void:
+	direction *= -1
+
+	# Flip the sprite horizontally
+	$WalkingSprite.scale.x *= -1
+	sprite.play("Walk")
+
+	# Flip raycasts horizontally
+	floor_check.position.x *= -1
+	wall_check.position.x *= -1
+	wall_check.target_position.x *= -1

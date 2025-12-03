@@ -1,4 +1,4 @@
-class_name EnemyBase extends Node2D
+class_name EnemyBase extends CharacterBody2D
 
 @export var ID : int = 0
 @export var enemyName : String = "Enemy"
