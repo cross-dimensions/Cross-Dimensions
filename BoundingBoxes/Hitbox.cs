@@ -49,6 +49,7 @@ public partial class Hitbox : BoundingBox
 
     public void OnHitboxAreaEntered(Area2D area)
     {
+        GD.Print("hit");
         if (area is Hurtbox hurtbox)
         {
             if (!CanHitSelf && hurtbox.OwnerCharacter == OwnerCharacter)
