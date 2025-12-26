@@ -1,17 +1,17 @@
 [gd_scene load_steps=15 format=3 uid="uid://cjo8oxurlpsup"]
 
-[ext_resource type="Script" uid="uid://t5xa8pqv2chw" path="res://Scripts/Characters/Character.cs" id="1_xloa1"]
-[ext_resource type="Script" uid="uid://dqpkcaajawmmr" path="res://Scripts/Characters/CloneableComponent.cs" id="2_peemv"]
-[ext_resource type="Script" uid="uid://cnt6dnn0xqp5j" path="res://Scripts/States/StateMachine.cs" id="3_677pu"]
-[ext_resource type="Script" uid="uid://c25jh47h6bqj2" path="res://Scripts/States/Characters/CharacterIdleState.cs" id="4_peemv"]
-[ext_resource type="Script" uid="uid://wjso6aicxr3t" path="res://Scripts/Characters/Controllers/UserController.cs" id="5_vdqda"]
-[ext_resource type="Script" uid="uid://ca34tm7a0qjwx" path="res://Scripts/States/Characters/CharacterMoveState.cs" id="5_xloa1"]
-[ext_resource type="Script" uid="uid://dseku1fko6r7x" path="res://Scripts/States/Characters/CharacterAirState.cs" id="6_4b18b"]
-[ext_resource type="Texture2D" uid="uid://btcwiupk5sq05" path="res://Assets/Sprites/Silly_Placeholders.png" id="6_xloa1"]
-[ext_resource type="Script" uid="uid://3gwoekpmt5om" path="res://Scripts/States/Characters/CharacterSplitState.cs" id="8_omicx"]
+[ext_resource type="Script" uid="uid://t5xa8pqv2chw" path="res://Characters/Character.cs" id="1_xloa1"]
+[ext_resource type="Script" uid="uid://dqpkcaajawmmr" path="res://Characters/CloneableComponent.cs" id="2_peemv"]
+[ext_resource type="Script" uid="uid://cnt6dnn0xqp5j" path="res://States/StateMachine.cs" id="3_677pu"]
+[ext_resource type="Script" uid="uid://c25jh47h6bqj2" path="res://States/Characters/CharacterIdleState.cs" id="4_peemv"]
+[ext_resource type="Script" uid="uid://wjso6aicxr3t" path="res://Characters/Controllers/UserController.cs" id="5_vdqda"]
+[ext_resource type="Script" uid="uid://ca34tm7a0qjwx" path="res://States/Characters/CharacterMoveState.cs" id="5_xloa1"]
+[ext_resource type="Script" uid="uid://dseku1fko6r7x" path="res://States/Characters/CharacterAirState.cs" id="6_4b18b"]
+[ext_resource type="Texture2D" uid="uid://btcwiupk5sq05" path="res://Assets/Textures/Silly_Placeholders.png" id="6_xloa1"]
+[ext_resource type="Script" uid="uid://3gwoekpmt5om" path="res://States/Characters/CharacterSplitState.cs" id="8_omicx"]
 [ext_resource type="Script" uid="uid://bks6bqyscxh45" path="res://Components/HealthComponent.cs" id="11_fgiha"]
 [ext_resource type="Script" uid="uid://u7a6ad2ljwu6" path="res://BoundingBoxes/Hurtbox.cs" id="11_p3cti"]
-[ext_resource type="Script" uid="uid://bmna34a4thb44" path="res://Scripts/UI/UIDeathScreen/death_handler.gd" id="12_6s7kk"]
+[ext_resource type="Script" uid="uid://bmna34a4thb44" path="res://UI/UIDeathScreen/death_handler.gd" id="12_6s7kk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xloa1"]
 size = Vector2(10, 10)
@@ -37,7 +37,6 @@ unique_name_in_owner = true
 script = ExtResource("2_peemv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
 
 [node name="MovementStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("3_677pu")
